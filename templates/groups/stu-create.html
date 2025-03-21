@@ -1,0 +1,60 @@
+<!-- <style>
+    label , button {
+        margin-left: 15px !important; 
+    }
+
+    input[type="text"], .form-select, input[type="email"], input[type="date"], input[type="number"], textarea , select{
+        margin: auto;
+        width: 95% !important;
+    }
+</style> -->
+{% extends "base.html" %}
+{% block lms %}
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 fw-semibold m-0">Create Group</h4>
+                </div>
+
+                <div class="text-end">
+                    <ol class="breadcrumb m-0 py-0">
+                        <li class="breadcrumb-item"><a href="/groups/table/">Groups</a></li>
+                        <li class="breadcrumb-item active">Create</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card ">
+                        <div class="card-body">
+
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {{form.as_p}}
+                                
+                                <button type="submit" class="btn btn-outline-warning">Create</button>
+                            </form>
+
+                        </div>
+                        
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+
+
+
+            </div> <!-- end row -->
+            
+        </div> <!-- container-fluid -->
+
+    </div> <!-- content -->
+
+</div>
+
+{% endblock lms %}  

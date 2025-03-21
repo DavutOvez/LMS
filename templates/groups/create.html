@@ -1,0 +1,138 @@
+<!-- <style>
+    label , button {
+        margin-left: 15px !important; 
+    }
+
+    input[type="text"], .form-select, input[type="email"], input[type="date"], input[type="number"], textarea , select{
+        margin: auto;
+        width: 95% !important;
+    }
+</style> -->
+{% extends "base.html" %}
+{% block lms %}
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 fw-semibold m-0">Create Group</h4>
+                </div>
+
+                <div class="text-end">
+                    <ol class="breadcrumb m-0 py-0">
+                        <li class="breadcrumb-item"><a href="/groups/table/">Groups</a></li>
+                        <li class="breadcrumb-item active">Create</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card ">
+                        <div class="card-body">
+
+                            <form action="" method="post" id="grouprom">
+                                {% csrf_token %}
+                                {{form.as_p}}
+                                
+                                <button type="submit" class="btn btn-outline-warning">Create</button>
+                            </form>
+
+                        </div>
+                        
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+
+
+
+            </div> <!-- end row -->
+            
+        </div> <!-- container-fluid -->
+
+    </div> <!-- content -->
+
+</div>
+{% endblock lms %}  
+{% block extra_js %}
+<!-- <script>
+    var capacity_p = $('#id_capacity').parent()
+    capacity_p.append("<small id='emailHelp' style='float : right;' class='form-text text-muted'>5/10</small>")
+</script> -->
+<script>
+    $(document).ready(function(){
+        $('#id_room').change(function () {
+            var roomID = $(this).val();
+
+
+            
+            var capacity_p = $('#id_capacity').parent()
+
+
+            if (roomID) {
+                $.ajax({
+                    url: "{% url 'rooms.get_room'  %}",
+                    data: {'room_id':roomID},
+                    dataType : 'json',
+                    success: function(data) {
+                        // alert(data)
+                        var capacity = $('#id_capacity').val();
+                        
+                        // $('#grouprom').addClass('was-validated')
+                        
+                        if (capacity > data) {
+                            $('#id_capacity').addClass('is-invalid')
+                            capacity_p.append(`<div class="invalid-feedback" id='capacity_p'>${capacity}/${data}</div>`)
+                        } else{
+                            $('#id_capacity').addClass('is-valid')
+                            capacity_p.append(`<div class="valid-feedback" id='capacity_p'>${capacity}/${data}</div>`)
+                        }
+                    }
+                });
+            } else{
+                $('#id_capacity_limit').detach()
+            }
+        });
+        $('#id_capacity').change(function(){
+            var capacity = $(this).val();
+            var old_data = $('#capacity_p').text();
+            var old_1 = old_data.split('/')[1];
+            alert($('#id_capacity').hasClass('is_valid'))
+            
+            if ($('#id_capacity').hasClass('form-control is_valid')) {
+                alert('dogry dp class ba');
+            }
+            $('#capacity_p').text(`${capacity}/${old_1}`)
+        })
+
+
+        $('#id_subject').change(function(){
+            var subjectId = $(this).val();
+            var levelDropdown = $('#id_level');
+
+            if (subjectId) {
+                $.ajax({
+                    url: "{% url 'levels.get_level'  %}",
+                    data: {'subject_id':subjectId},
+                    dataType : 'json',
+                    success: function(data) {
+                        levelDropdown.empty();
+                        levelDropdown.append('<option value="" selected disabled>Select level </option>');
+                        $.each(data , function(index , item){
+                            levelDropdown.append('<option value=" '+item.id + '">' + item.name + '</option>');
+                        });
+                    }
+                });
+            } else{
+                levelDropdown.empty();
+                levelDropdown.append('<option value="">Select level </option>');
+            }
+        });
+    });
+
+
+</script>
+{% endblock extra_js %}

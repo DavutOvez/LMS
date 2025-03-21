@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block lms %}
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 fw-semibold m-0">Branches Table</h4>
+                </div>
+
+                <div class="text-end">
+                    <ol class="breadcrumb m-0 py-0">
+                        <li class="breadcrumb-item"><a href="/branches/table/">Branches</a></li>
+                        <li class="breadcrumb-item active">Table</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h5 class="card-title mb-0">-</h5>
+                        <div class="ms-auto">
+                            <a href="/branches/create/" class="btn btn-outline-info rounded-pill">Add Branch</a>
+                        </div>
+                    </div>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Head of Branch</th>
+                                    <th scope="col">Number of Groups</th>
+                                    
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                {% for i in all %}
+                                  <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{i.name}}</td>
+                                    <td>{{i.head_of_branch}}</td>
+                                    <td>{{i.groups.count}}</td>
+
+                                    <td>
+                                        <a href='/branches/edit/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                            <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
+                                        </a>
+                                        <a href='/branches/delete/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
+                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
+                                        </a>
+                                    </td>
+                                  </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock lms %}  

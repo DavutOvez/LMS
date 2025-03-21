@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block lms %}
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 fw-semibold m-0">Groups Table</h4>
+                </div>
+
+                <div class="text-end">
+                    <ol class="breadcrumb m-0 py-0">
+                        <li class="breadcrumb-item"><a href="/groups/table/">Groups</a></li>
+                        <li class="breadcrumb-item active">Table</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h5 class="card-title mb-0">-</h5>
+                        <div class="ms-auto">
+                            <a href="/groups/create/" class="btn btn-outline-info rounded-pill">Add Group</a>
+                            <a href="/groups/add/student/" class="btn btn-success rounded-pill">Add Student</a>
+                        </div>
+                    </div>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                            
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Schedule</th>
+                                    <th scope="col">Lessons</th>
+                                    <th scope="col">Teacher</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                {% for i in all %}
+                                  <tr>
+                                    
+                                    <td>
+                                        <p>Group: <span class="badge text-bg-warning">{{i.name}}</span></p>
+                                        <p>Level: {{i.level}}</p>
+                                        <p>Subject: {{i.subject}}</p>
+                                    </td>
+                                    <td>
+                                        <p>Start/End: <span class="badge text-bg-info">{{i.start_time}} - {{i.end_time}}</span> </p>
+                                        <p>Weekdays:
+                                            {% for k in i.get_days  %}
+                                            <span class="badge text-bg-info">{{k}}</span>
+                                            {% endfor %}
+                                        </p>
+                                        <p>Rooms: <span class="badge text-bg-info">{{i.room}} , {{i.room}} , {{i.room}}</span> </p>
+                                    </td>
+                                    <td>
+                                        <p>Time: <span class="badge text-bg-info">{{i.start_time}} - {{i.end_time}}</span> </p>
+                                        <p>Language: 
+                                        {% for d in i.language %}
+                                            <span class="badge text-bg-info">{{d}}</span> </p>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        <span class="badge text-bg-primary">{{i.teacher}}</span>
+                                    </td>
+                                    <td>
+                                        <a href='/groups/edit/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                            <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
+                                        </a>
+                                        <a href='/groups/delete/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
+                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
+                                        </a>
+                                    </td>
+                                  </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock lms %}  

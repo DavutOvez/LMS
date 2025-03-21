@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block lms %}
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 fw-semibold m-0">Employees Table</h4>
+                </div>
+
+                <div class="text-end">
+                    <ol class="breadcrumb m-0 py-0">
+                        <li class="breadcrumb-item"><a href="/employees/table/">Employees</a></li>
+                        <li class="breadcrumb-item active">Table</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h5 class="card-title mb-0">-</h5>
+                        <div class="ms-auto">
+                            <a href="/employees/create/" class="btn btn-outline-info rounded-pill">Add Employee</a>
+                        </div>
+                    </div>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Photo</th>
+                                    <th scope="col">Fullname</th>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                {% for i in all %}
+                                  <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    {% if i.image.url %}
+                                        <td>
+                                            <img src="{{i.image.url}}" alt="" height="100" width="100" style="border-radius: 45px;">
+                                        </td>
+                                    {% else %}
+                                    <td>No Photo</td>
+                                    {% endif %}
+                                    <td>{{i.fullname}}</td>
+                                    <td>
+                                        <span class="badge text-bg-primary">{{i.department}}</span>
+                                    </td>
+                                    <td>{{i.username}}</td>
+                                    <td>+{{i.phone_number}}</td>
+
+                                    <td>
+                                        <a href='/employees/profile/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-warning-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Eye">
+                                            <i class="mdi mdi-eye-outline fs-14 text-warning"></i>
+                                        </a>
+                                        <a href='/employees/edit/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                            <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
+                                        </a>
+                                        <a href='/employees/delete/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
+                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
+                                        </a>
+                                    </td>
+                                  </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock lms %}  
