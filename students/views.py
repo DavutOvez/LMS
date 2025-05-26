@@ -2,6 +2,8 @@ from django.shortcuts import render , redirect
 from .models import Student
 from .forms import StudentForm
 from django.utils import timezone
+from django.core.paginator import Paginator  ,EmptyPage
+
 
 # Create your views here.
 
@@ -13,8 +15,14 @@ def generate_student_ID():
     return year + str(s_count + 1).zfill(4)
 
 def student_table(request):
-    students = Student.objects.filter(deleted_at = None)
-    return render(request,'students/table.html',{'all':students})
+    all = Student.objects.filter(deleted_at = None)
+    page_n = request.GET.get('page',1)
+    p = Paginator(all , 10)
+    try:
+        page = p.page(page_n)
+    except EmptyPage:
+        page = p.page(1)
+    return render(request,'students/table.html',{'page':page})
 
 def student_create(request):
     form = StudentForm()

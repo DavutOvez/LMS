@@ -35,13 +35,13 @@
                                     <th scope="col">Photo</th>
                                     <th scope="col">Fullname</th>
                                     <th scope="col">Department</th>
-                                    <th scope="col">Username</th>
                                     <th scope="col">Phone</th>
+                                    <th scope="col">Username</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                {% for i in all %}
+                                {% for i in page %}
                                   <tr>
                                     <th scope="row">{{forloop.counter}}</th>
                                     {% if i.image.url %}
@@ -55,6 +55,7 @@
                                     <td>
                                         <span class="badge text-bg-primary">{{i.department}}</span>
                                     </td>
+                                    <td>+{{i.phone_number}}</td>
                                     <td>
                                         {% if i.username %}
                                             @{{i.username.username}}
@@ -64,7 +65,6 @@
                                             </a>
                                         {% endif %}
                                     </td>
-                                    <td>+{{i.phone_number}}</td>
 
                                     <td>
                                         <a href='/employees/profile/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-warning-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Eye">
@@ -82,6 +82,24 @@
                                 
                             </tbody>
                         </table>
+                        <nav style="float: right;" aria-label="Page navigation example">
+                            <ul class="pagination mb-0">
+                                {% if page.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="/employees/table/?page={{page.previous_page_number}}">Previous</a></li>
+                                {% endif %}
+
+                                {% for num in page.paginator.page_range %}
+                                    <li {% if num == page.number %} class="page-item active"{% else %} class='page-item'{% endif %}><a class="page-link" href="/employees/table/?page={{num}}">{{num}}</a></li>
+                                
+                                {% endfor %}
+                                
+                                {% if page.has_next %}
+                                    <li class="page-item"><a class="page-link" href="/employees/table/?page={{page.next_page_number}}">Next</a></li>
+                                
+                                {% else %}
+                                {% endif %}
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

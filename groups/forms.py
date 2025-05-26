@@ -36,14 +36,13 @@ class GroupForm(forms.ModelForm):
 
 
 
-
-
-
-
-class GroupStudentForm(forms.ModelForm):
-    students = forms.ModelMultipleChoiceField(queryset=Student.objects.filter(deleted_at = None),widget = forms.SelectMultiple(attrs={'class':'form-select  select2'}))
-
-    class Meta:
-        model = Group
-        fields = ['students']
+class SearchForm(forms.Form):
+    subject = forms.ModelChoiceField(required=False , queryset=Subject.objects.all(),
+                                     widget=forms.Select(attrs={'class':'form-select select2' , 'onchange':'this.form.submit()'}))
+    level = forms.ModelChoiceField(required=False , queryset=Level.objects.all(),
+                                     widget=forms.Select(attrs={'class':'form-select select2' , 'onchange':'this.form.submit()'}))
+    name = forms.CharField(required=False ,
+                                     widget=forms.TextInput(attrs={'class':'form-control'}))
+    part_of_day = forms.CharField(required=False ,
+                                     widget=forms.Select(choices=Group.PART_OF_DAY,attrs={'class':'form-select select2' , 'onchange':'this.form.submit()'}))
 

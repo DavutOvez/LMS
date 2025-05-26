@@ -2,6 +2,7 @@ from django.shortcuts import render , redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login , authenticate , logout
 from .forms import *
+from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 def index_page(request):
@@ -25,3 +26,6 @@ def login_page(request):
 def logout_page(request):
     logout(request)
     return render(request,'logout.html')
+
+def custom_403(request , exception):
+    return render(request , 'errors/403.html',status=403)

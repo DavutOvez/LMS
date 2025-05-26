@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Error 429 | Hando - Responsive Admin Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc."/>
+        <meta name="author" content="Zoyothemes"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- App css -->
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" id="app-style" />
+
+        <!-- Icons -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+
+        <script src="{% static 'assets/js/head.js' %}"></script>
+
+
+    </head>
+
+    <!-- body start -->
+    <body data-menu-color="light" data-sidebar="default">
+
+    <body class="maintenance-bg-image">
+        
+        <!-- Begin page -->
+        <div class="maintenance-pages">
+            <div class="container-fluid p-0">
+                <div class="row">
+
+                    <div class="col-xl-12 align-self-center">
+                        <div class="row">
+                            <div class="col-md-5 mx-auto">
+                                <div class="text-center">
+
+                                    <div class="mb-0">
+                                        <h3 class="mt-4 fw-semibold text-dark text-capitalize">Access Denied</h3>
+                                        <p class="text-muted">This pages you are trying to access does not exits or has been moved. <br> Try going back to our homepage.</p>
+                                    </div>
+
+                                    <button class="btn btn-primary mt-3 me-1" onclick="history.back()">Back to Home</button>
+
+                                    <div class="maintenance-img mt-4">
+                                        <img src="{% static 'assets/images/svg/429-error.svg' %}" class="img-fluid" alt="coming-soon">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END wrapper -->
+
+        <!-- Vendor -->
+        <script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+        <script src="{% static 'assets/libs/node-waves/waves.min.js' %}"></script>
+        <script src="{% static 'assets/libs/waypoints/lib/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'assets/libs/jquery.counterup/jquery.counterup.min.js' %}"></script>
+        <script src="{% static 'assets/libs/feather-icons/feather.min.js' %}"></script>
+
+        <!-- App js-->
+        <script src="{% static 'assets/js/app.js' %}"></script>
+        
+    </body>
+</html>

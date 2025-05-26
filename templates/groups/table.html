@@ -28,6 +28,22 @@
                 </div><!-- end card header -->
 
                 <div class="card-body">
+                    <form class="mb-3">
+                        <div class="row">
+                            <div class="col-3">
+                                {{search_form.subject}}
+                            </div>
+                            <div class="col-3">
+                                {{search_form.level}}
+                            </div>
+                            <div class="col-3">
+                                {{search_form.name}}
+                            </div>
+                            <div class="col-3">
+                                {{search_form.part_of_day}}
+                            </div>
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table class="table mb-0">
                             <thead>
@@ -36,7 +52,8 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Schedule</th>
                                     <th scope="col">Lessons</th>
-                                    <th scope="col">Teacher</th>
+                                    <th scope="col"style='width:400px;'>Teacher</th>
+                                    <th>Total Students</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -45,7 +62,7 @@
                                   <tr>
                                     
                                     <td>
-                                        <p>Group: <span class="badge text-bg-warning">{{i.name}}</span></p>
+                                        <p>Group: <span class="badge text-bg-warning" id="g{{i.id}}">{{i.name}}</span></p>
                                         <p>Level: {{i.level}}</p>
                                         <p>Subject: {{i.level.subject}}</p>
                                     </td>
@@ -66,8 +83,24 @@
                                         {% endfor %}
                                     </td>
                                     <td>
-                                        <span class="badge text-bg-primary">{{i.teacher}}</span>
+                                        {% if i.teacher %}
+                                            <span class="plan-title text-info">{{i.teacher}}</span>
+                                            <span hidden id="t{{i.id}}">{{i.teacher.id}}</span>
+                                            <span >
+                                                <button type="button" class="btn btn-icon btn-sm bg-primary-subtle me-1" onclick="get_id({{i.id}})" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center">
+                                                    <i class="mdi mdi-account-edit fs-14 text-primary"></i>
+                                                </button>
+                                            </span>
+                                        {% else %}
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button type="button" class="btn btn-icon btn-sm bg-primary-subtle me-1" onclick="get_id({{i.id}})" data-bs-toggle="modal" data-bs-target=".bs-example-modal-center">
+                                                    <i class="mdi mdi-account-plus fs-14 text-primary"></i>
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                        
                                     </td>
+                                    <td><a href='/groups/add_student/{{i.id}}/'>{{i.students.count}} / {{i.capacity}}</a></td>
                                     <td>
                                         <a href='/groups/edit/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                                             <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
@@ -76,6 +109,7 @@
                                             <i class="mdi mdi-delete fs-14 text-danger"></i>
                                         </a>
                                     </td>
+                                    
                                   </tr>
                                 {% endfor %}
                                 
@@ -106,4 +140,48 @@
 
     </div>
 </div>
+
+<div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_text"> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/groups/add_teacher/" method="post">
+                    {% csrf_token %}
+                    <select name="student_id" id="student_id" class="form-select select2">
+                        <option value="" selected>-----</option>
+                        {% for i in teachers %}
+                          <option value="{{i.id}}">{{i.fullname}}</option>
+                        {% endfor %}
+                        <input type="hidden" name="group_id" id="group_id" value="">
+                    </select>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 {% endblock lms %}  
+
+{% block extra_js %}
+  <script>
+    function get_id(id) {
+      var  group_name = document.getElementById(`g${id}`).innerHTML;
+      document.getElementById(`modal_text`).innerHTML=`Assign teacher to "${group_name}" group`;
+      document.getElementById(`group_id`).value = id;
+
+      var teacher_id = document.getElementById(`t${id}`).innerHTML;
+      if (teacher_id) {
+        document.getElementById('emp_id').value = teacher_id;
+      }
+    }
+  </script>
+{% endblock extra_js %}

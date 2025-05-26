@@ -4,6 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from subjects.views import*
 from main.views import *
+from employees.views import *
+from django.conf.urls import handler403
+
+handler403 = custom_403
 
 urlpatterns = [
     #Level  <-> #Level
@@ -28,6 +32,11 @@ urlpatterns = [
     path('subjects/',include('subjects.urls')),
     path('rooms/',include('rooms.urls')),
     path('groups/',include('groups.urls')),
+    #-------------------------------------------
+    path('roles/table/',roles_table),
+    path('roles/edit/<int:pk>/',role_edit),
+    path('roles/create/',role_create),
+    #-------------------------------------------
 
 
 ]

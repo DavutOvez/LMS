@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block lms %}
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 fw-semibold m-0">Groups Table</h4>
+                </div>
+
+                <div class="text-end">
+                    <ol class="breadcrumb m-0 py-0">
+                        <li class="breadcrumb-item"><a href="/groups/table/">Groups</a></li>
+                        <li class="breadcrumb-item active">Table</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h5 class="card-title mb-0">-</h5>
+                        <div class="ms-auto">
+                            <button type="button" class="btn btn-info me-1"  data-bs-toggle="modal" data-bs-target=".bs-example-modal-center"> Add Student </button>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                            
+                                    <th scope="col">Fullname</th>
+                                    <th scope="col">Student ID</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                {% for i in students %}
+                                  <tr>
+                                    <td>{{i.fullname}}</td>
+                                    <td>{{i.student_ID}}</td>
+                                    <td>
+                                        <a href='/groups/edit/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                            <i class="mdi mdi-eye-outline fs-14 text-primary"></i>
+                                        </a>
+                                        <a href='/groups/student/delete/{{i.id}}/{{group.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
+                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
+                                        </a>
+                                    </td>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_text">Add Student to {{group.name}} </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <select name="student_id" id="student_id" class="form-select select2">
+                        <option value="" selected>-----</option>
+                        {% for i in all_students %}
+                        
+                          <option value="{{i.id}}">{{i.fullname}}</option>
+                        {% endfor %}
+                    </select>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+{% endblock lms %}  

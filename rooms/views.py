@@ -3,11 +3,18 @@ from .forms import RoomForm
 from .models import Room
 from django.utils import timezone
 from django.http import JsonResponse
+from django.core.paginator import Paginator  ,EmptyPage
 # Create your views here.
 
 def room_table(request):
-    rooms = Room.objects.filter(deleted_at = None)
-    return render(request,'rooms/table.html',{'all':rooms})
+    all = Room.objects.filter(deleted_at = None)
+    page_n = request.GET.get('page',1)
+    p = Paginator(all , 10)
+    try:
+        page = p.page(page_n)
+    except EmptyPage:
+        page = p.page(1)
+    return render(request,'rooms/table.html',{'page':page})
 
 def room_create(request):
     form = RoomForm()

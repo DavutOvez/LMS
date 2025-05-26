@@ -1,18 +1,24 @@
-from django.shortcuts import render
+
+from django.core.paginator import Paginator  ,EmptyPage
+
 from django.http import JsonResponse
-
-
-
-# Create your views here.
 from django.shortcuts import render , redirect
 from .models import *
 from .forms import *
+from django.contrib.auth.decorators import permission_required
 from django.utils import timezone
 # Create your views here.
 
+@permission_required('subjects.view_subject' , raise_exception=True)
 def subjects_table(request):
     all = Subject.objects.filter(deleted_at = None)
-    return render(request,'subjects/table.html',context={'all':all})
+    page_n = request.GET.get('page',1)
+    p = Paginator(all , 10)
+    try:
+        page = p.page(page_n)
+    except EmptyPage:
+        page = p.page(1)
+    return render(request,'subjects/table.html',context={'page':page})
 
 def subject_delete(request , pk):
     subject = Subject.objects.get(pk = pk)
@@ -44,7 +50,13 @@ def subject_create(request):
 
 def levels_table(request):
     all = Level.objects.filter(deleted_at = None)
-    return render(request,'levels/table.html',context={'all':all})
+    page_n = request.GET.get('page',1)
+    p = Paginator(all , 10)
+    try:
+        page = p.page(page_n)
+    except EmptyPage:
+        page = p.page(1)
+    return render(request,'levels/table.html',context={'page':page})
 
 def level_delete(request , pk):
     level = Level.objects.get(pk = pk)

@@ -2,11 +2,18 @@ from django.shortcuts import render , redirect
 from .forms import PositionForm
 from .models import Position
 from django.utils import timezone
+from django.core.paginator import Paginator  ,EmptyPage
 # Create your views here.
 
 def position_table(request):
-    positions = Position.objects.filter(deleted_at = None)
-    return render(request,'positions/table.html',{'all':positions})
+    all = Position.objects.filter(deleted_at = None)
+    page_n = request.GET.get('page',1)
+    p = Paginator(all , 10)
+    try:
+        page = p.page(page_n)
+    except EmptyPage:
+        page = p.page(1)
+    return render(request,'positions/table.html',{'page':page})
 
 def position_create(request):
     form = PositionForm()

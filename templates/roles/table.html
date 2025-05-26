@@ -6,12 +6,11 @@
         <div class="container-fluid">
             <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
                 <div class="flex-grow-1">
-                    <h4 class="fs-18 fw-semibold m-0">Branches Table</h4>
+                    <h4 class="fs-18 fw-semibold m-0">Role Table</h4>
                 </div>
-
                 <div class="text-end">
                     <ol class="breadcrumb m-0 py-0">
-                        <li class="breadcrumb-item"><a href="/branches/table/">Branches</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Role</a></li>
                         <li class="breadcrumb-item active">Table</li>
                     </ol>
                 </div>
@@ -21,7 +20,7 @@
                     <div class="d-flex align-items-center">
                         <h5 class="card-title mb-0">-</h5>
                         <div class="ms-auto">
-                            <a href="/branches/create/" class="btn btn-outline-info rounded-pill">Add Branch</a>
+                            <a href="/roles/create/" class="btn btn-outline-info rounded-pill">Add Role</a>
                         </div>
                     </div>
                 </div><!-- end card header -->
@@ -33,25 +32,31 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Head of Branch</th>
-                                    <th scope="col">Number of Groups</th>
-                                    
+                                    <th scope="col">Permissions</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                {% for i in page %}
+                                {% for i in all %}
                                   <tr>
                                     <th scope="row">{{forloop.counter}}</th>
+                                    
                                     <td>{{i.name}}</td>
-                                    <td>{{i.head_of_branch}}</td>
-                                    <td>{{i.groups.count}}</td>
+                                    <td>
+                                    {% for k in i.permissions.all %}
+                                    
+                                        <p>
+                                            <span class="badge text-bg-warning" id="g{{i.id}}">{{k.name}}</span>
+                                        </p>
+                                    {% endfor %}
+                                    </td>
+                                    
 
                                     <td>
-                                        <a href='/branches/edit/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                        <a href='/roles/edit/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                                             <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
                                         </a>
-                                        <a href='/branches/delete/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
+                                        <a href='/roles/delete/{{i.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
                                             <i class="mdi mdi-delete fs-14 text-danger"></i>
                                         </a>
                                     </td>
@@ -63,16 +68,16 @@
                         <nav style="float: right;" aria-label="Page navigation example">
                             <ul class="pagination mb-0">
                                 {% if page.has_previous %}
-                                    <li class="page-item"><a class="page-link" href="/branches/table/?page={{page.previous_page_number}}">Previous</a></li>
+                                    <li class="page-item"><a class="page-link" href="/levels/table/?page={{page.previous_page_number}}">Previous</a></li>
                                 {% endif %}
 
                                 {% for num in page.paginator.page_range %}
-                                    <li {% if num == page.number %} class="page-item active"{% else %} class='page-item'{% endif %}><a class="page-link" href="/branches/table/?page={{num}}">{{num}}</a></li>
+                                    <li {% if num == page.number %} class="page-item active"{% else %} class='page-item'{% endif %}><a class="page-link" href="/levels/table/?page={{num}}">{{num}}</a></li>
                                 
                                 {% endfor %}
                                 
                                 {% if page.has_next %}
-                                    <li class="page-item"><a class="page-link" href="/branches/table/?page={{page.next_page_number}}">Next</a></li>
+                                    <li class="page-item"><a class="page-link" href="/levels/table/?page={{page.next_page_number}}">Next</a></li>
                                 
                                 {% else %}
                                 {% endif %}
