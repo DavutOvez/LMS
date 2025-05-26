@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block lms %}
+<style>
+    table , tr , td{
+        border-left: solid;
+        border-color: rgba(128, 128, 128 , 0.2) ;
+        
+    }
+    th{
+        text-align: center;
+    }
+    td:nth-child(1){
+        background-color: rgba(128, 128, 128 , 0.2);
+        
+    }
+    tr:first-child th{
+        background-color: rgba(128, 128, 128 , 0.2);
+    }
+</style>
+<div class="content-page">
+    
+        <div class="container-fluid">
+            <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+                <div class="flex-grow-1">
+                    <h4 class="fs-18 fw-semibold m-0">Groups Timetable</h4>
+                </div>
+
+                <div class="text-end">
+                    <ol class="breadcrumb m-0 py-0">
+                        <li class="breadcrumb-item"><a href="/groups/table/">Groups</a></li>
+                        <li class="breadcrumb-item active">Timetable</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h5 class="card-title mb-0">-</h5>
+                        
+                    </div>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                            
+                                    <th scope="col">Room</th>
+                                    <th scope="col" class="mb-1 text-warning fs-14">Monday</th>
+                                    <th scope="col" class="mb-1 text-warning fs-14">Tuesday</th>
+                                    <th scope="col" class="mb-1 text-warning fs-14">Wednesday</th>
+                                    <th scope="col" class="mb-1 text-warning fs-14">Thursday</th>
+                                    <th scope="col" class="mb-1 text-warning fs-14">Friday</th>
+                                    <th scope="col" class="mb-1 text-warning fs-14">Saturday</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                {% for room in timetable %}
+                                    <tr>
+                                        <td>{{room.0}}</td>
+                                        {% for data in room  %}
+                                          {% if forloop.counter != 1 %}
+                                                {% if data %}
+                                                    <td>
+                                                        <p style="text-align: center;"><span class="badge text-bg-info">{{ data.start_time|time:"H:i" }}-{{ data.end_time|time:"H:i" }}</span></p>
+                                                        <p style="text-align: center;"><span class="mb-8 text-primary fs-14">{{data.name}}</span></p>
+                                                        <p style="text-align: center;">Students:<span class="mb-8 text-primary fs-14"> {{data.students.count}} / {{data.capacity}}</span></p>
+                                                        
+                                                        <p style="width: 200px;">Teacher: <span class="mb-8 text-info">{{data.teacher}}</span> <a href='/groups/edit/{{data.id}}/' aria-label="anchor" class="btn btn-icon btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                                            <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
+                                                        </a></p>
+                                                        
+                                                    </td>
+                                                {% else %}
+                                                <td>-</td>
+                                                {% endif %}
+                                          {% endif %}
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+</div>
+{% endblock lms %}  

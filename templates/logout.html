@@ -4,7 +4,7 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>Log In | Hando - Responsive Admin Dashboard Template</title>
+        <title>Logout | Hando - Responsive Admin Dashboard Template</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc."/>
         <meta name="author" content="Zoyothemes"/>
@@ -25,6 +25,7 @@
     </head>
 
     <body>
+
         <!-- Begin page -->
         <div class="account-page">
             <div class="container-fluid p-0">
@@ -33,11 +34,12 @@
                     <div class="col-xl-5" style="margin:auto">
                         <div class="row">
                             <div class="col-md-8 mx-auto">
+
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="mb-0 p-0 p-lg-3">
                                             <div class="mb-0 border-0 p-md-4 p-lg-0">
-                                                <div class="mb-4 p-0 text-lg-start text-center">
+                                                <div class="mb-4 p-0 text-center">
                                                     <div class="auth-brand">
                                                         <a href="index.html" class="logo logo-light">
                                                             <span class="logo-lg">
@@ -51,35 +53,31 @@
                                                         </a>
                                                     </div>
                                                 </div>
+                                                
     
-                                                <div class="pt-0">
-                                                    <form action="" class="my-4" method = 'post'>
-                                                        {% csrf_token %}
-                                                        {{form.as_p}}
-                            
-                                                        <div class="form-group mb-0 row">
-                                                            <div class="col-12">
-                                                                <div class="d-grid">
-                                                                    <button class="btn btn-primary fw-semibold" type="submit"> Log In </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                    
+                                                <div class="auth-title-section mb-4 text-center"> 
+                                                    <h3 class="text-dark fw-semibold mb-3">You are Logged Out</h3>
+                                                    <p class="text-muted fs-14 mb-0">Thank you for our LMS</p>
+                                                </div>
+                                            
+                                                <div class="text-center">
+                                                    <a href="/login/" class="btn btn-primary mt-3 me-1"> Log In </a>
+                                                </div>
+            
+                                                <div class="maintenance-img text-center pt-4">
+                                                    <img src="{% static 'assets/images/svg/logout.svg' %}" height="200" alt="svg-logo">
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
-                
+
                 </div>
             </div>
         </div>
-        
         <!-- END wrapper -->
 
         <!-- Vendor -->

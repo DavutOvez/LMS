@@ -55,7 +55,15 @@
                                     <td>
                                         <span class="badge text-bg-primary">{{i.department}}</span>
                                     </td>
-                                    <td>{{i.username}}</td>
+                                    <td>
+                                        {% if i.username %}
+                                            @{{i.username.username}}
+                                        {% else %}
+                                            <a href="{% url 'employees.create_user' i.id %}" aria-label="anchor" class="btn bg-warning-subtle me-1" data-bs-original-title="Details">
+                                                Add user
+                                            </a>
+                                        {% endif %}
+                                    </td>
                                     <td>+{{i.phone_number}}</td>
 
                                     <td>

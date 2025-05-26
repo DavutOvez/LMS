@@ -64,12 +64,15 @@
 </script> -->
 <script>
     $(document).ready(function(){
+        var capacity_p = $('#id_capacity').parent()
+        capacity_p.append(`<div class="invalid-feedback" id='capacity_p'>sad</div>`)
+
+
         $('#id_room').change(function () {
             var roomID = $(this).val();
 
 
             
-            var capacity_p = $('#id_capacity').parent()
 
 
             if (roomID) {
@@ -82,13 +85,13 @@
                         var capacity = $('#id_capacity').val();
                         
                         // $('#grouprom').addClass('was-validated')
-                        
+                        // alert(data)
                         if (capacity > data) {
                             $('#id_capacity').addClass('is-invalid')
-                            capacity_p.append(`<div class="invalid-feedback" id='capacity_p'>${capacity}/${data}</div>`)
+                            $('#id_capacity').text(`${capacity}/${data}`)
                         } else{
                             $('#id_capacity').addClass('is-valid')
-                            capacity_p.append(`<div class="valid-feedback" id='capacity_p'>${capacity}/${data}</div>`)
+                            $('#id_capacity').text(`${capacity}/${data}`)                            
                         }
                     }
                 });
@@ -100,13 +103,25 @@
             var capacity = $(this).val();
             var old_data = $('#capacity_p').text();
             var old_1 = old_data.split('/')[1];
-            alert($('#id_capacity').hasClass('is_valid'))
             
-            if ($('#id_capacity').hasClass('form-control is_valid')) {
-                alert('dogry dp class ba');
-            }
-            $('#capacity_p').text(`${capacity}/${old_1}`)
-        })
+            if (capacity > old_1) {
+                if ($('#id_capacity').hasClass('is-valid')) {
+                    $('#id_capacity').removeClass('is-valid')
+                    $('#id_capacity').addClass('is-invalid')
+                    $('#capacity_p').removeClass('valid-feedback')
+                    $('#capacity_p').addClass('invalid-feedback')
+                }
+                $('#capacity_p').text(`${capacity}/${old_1}`)
+            } else {
+                if ($('#id_capacity').hasClass('is-invalid')) {
+                    $('#id_capacity').removeClass('is-invalid')
+                    $('#id_capacity').addClass('is-valid')
+                    $('#capacity_p').removeClass('invalid-feedback')
+                    $('#capacity_p').addClass('valid-feedback')
+                }
+                $('#capacity_p').text(`${capacity}/${old_1}`)
+            };
+        });
 
 
         $('#id_subject').change(function(){

@@ -22,7 +22,7 @@
                         <h5 class="card-title mb-0">-</h5>
                         <div class="ms-auto">
                             <a href="/groups/create/" class="btn btn-outline-info rounded-pill">Add Group</a>
-                            <a href="/groups/add/student/" class="btn btn-success rounded-pill">Add Student</a>
+                            
                         </div>
                     </div>
                 </div><!-- end card header -->
@@ -41,13 +41,13 @@
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                {% for i in all %}
+                                {% for i in page %}
                                   <tr>
                                     
                                     <td>
                                         <p>Group: <span class="badge text-bg-warning">{{i.name}}</span></p>
                                         <p>Level: {{i.level}}</p>
-                                        <p>Subject: {{i.subject}}</p>
+                                        <p>Subject: {{i.level.subject}}</p>
                                     </td>
                                     <td>
                                         <p>Start/End: <span class="badge text-bg-info">{{i.start_time}} - {{i.end_time}}</span> </p>
@@ -81,6 +81,24 @@
                                 
                             </tbody>
                         </table>
+                        <nav style="float: right;" aria-label="Page navigation example">
+                            <ul class="pagination mb-0">
+                                {% if page.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="/groups/table/?page={{page.previous_page_number}}">Previous</a></li>
+                                {% endif %}
+
+                                {% for num in page.paginator.page_range %}
+                                    <li {% if num == page.number %} class="page-item active"{% else %} class='page-item'{% endif %}><a class="page-link" href="/groups/table/?page={{num}}">{{num}}</a></li>
+                                
+                                {% endfor %}
+                                
+                                {% if page.has_next %}
+                                    <li class="page-item"><a class="page-link" href="/groups/table/?page={{page.next_page_number}}">Next</a></li>
+                                
+                                {% else %}
+                                {% endif %}
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

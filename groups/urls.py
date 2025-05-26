@@ -7,5 +7,5 @@ urlpatterns = [
     path('delete/<int:pk>/',group_delete),
     path('edit/<int:pk>/',group_edit),
     path('create/',group_create),
-    path('add/student/',group_stu_create)
+    path('timetable/',group_timetable),
 ]

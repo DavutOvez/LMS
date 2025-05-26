@@ -1,5 +1,5 @@
 from django.shortcuts import render , redirect
-from .forms import EmployeeForm
+from .forms import *
 from .models import Employee
 from django.utils import timezone
 # Create your views here.
@@ -39,3 +39,15 @@ def detail(request , pk):
     
     employee = Employee.objects.get(id=pk)
     return render(request , 'employees/profile.html' , context={'employee':employee})
+
+def create_user(request,pk):
+    employee = Employee.objects.get(id=pk)
+    form = UserForm()
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            username = form.save()
+            employee.username = username
+            employee.save()
+            return redirect('/employees/table/')
+    return render(request,'employees/user_create.html',context={'form':form,'employee':employee})

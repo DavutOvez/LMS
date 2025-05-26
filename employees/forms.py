@@ -3,6 +3,7 @@ from .models import *
 from departments.models import *
 from positions.models import*
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class EmployeeForm(forms.ModelForm):
     image = forms.ImageField(widget=forms.FileInput(attrs={'class':'form-control'}))
@@ -24,4 +25,9 @@ class EmployeeForm(forms.ModelForm):
 
     class Meta:
         model = Employee
-        exclude = ['deleted_at']
+        exclude = ['deleted_at' , 'username']
+
+class UserForm(UserCreationForm):
+    username = forms.CharField(label='Enter employee username', widget=forms.TextInput(attrs={'class':'form-control'}))
+    password1 = forms.CharField(label='Enter employee password', widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput(attrs={'class':'form-control'}))

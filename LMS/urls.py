@@ -3,10 +3,12 @@ from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
 from subjects.views import*
-
+from main.views import *
 
 urlpatterns = [
     #Level  <-> #Level
+    path('login/',login_page,name='user_login'),
+    path('logout/',logout_page,name='user_logout'),
     #-------------------------------------------
     path('levels/table/',levels_table),
     path('levels/edit/<int:pk>/',level_edit),

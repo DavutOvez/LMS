@@ -22,7 +22,6 @@ class Group(models.Model):
         ('4','Thursday'),
         ('5','Friday'),
         ('6','Saturday'),
-        ('7','Sunday')
     ]
     LANGUAGE_CHOICES = [
     ('English', 'English'),

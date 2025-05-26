@@ -13,7 +13,7 @@ from students.models import *
 
 class GroupForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    subject = forms.ModelChoiceField(queryset=Subject.objects.filter(deleted_at = None),widget=forms.Select(attrs={'class':'form-select select2'})) 
+    subject = forms.ModelChoiceField(queryset=Subject.objects.filter(deleted_at = None),required=False,widget=forms.Select(attrs={'class':'form-select select2'})) 
     level = forms.ModelChoiceField(queryset=Level.objects.filter(deleted_at = None),widget=forms.Select(attrs={'class':'form-select select2'}))
     
     branch = forms.ModelChoiceField(queryset=Branch.objects.filter(deleted_at = None),widget=forms.Select(attrs={'class':'form-select select2'}))
@@ -31,7 +31,7 @@ class GroupForm(forms.ModelForm):
         exclude = ['students' ,'season','teacher', 'deleted_at']
     def __init__(self, *args , **kwargs):
         super().__init__(*args ,**kwargs )
-        field_order = ['name','subject','level','branch','capacity','room','part_of_day','week_days','start_time','end_time']
+        field_order = ['name','subject','level','branch','language','capacity','room','part_of_day','week_days','start_time','end_time']
         self.fields = {key: self.fields[key] for key in field_order if key in self.fields}
 
 
